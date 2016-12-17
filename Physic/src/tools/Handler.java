@@ -28,4 +28,8 @@ public class Handler {
 		balls.add(ball);
 	}
 
+	public void clear() {
+		balls.clear();
+	}
+
 }

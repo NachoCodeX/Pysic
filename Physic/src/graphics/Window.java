@@ -18,7 +18,7 @@ import tools.Handler;
 public class Window extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	private static final int W = 900, H = 600, PW = 300;
+	public static final int W = 900, H = 600, PW = 300;
 	private JFrame win;
 	private JPanel panel;
 	private JSlider[] slider;
@@ -38,8 +38,10 @@ public class Window extends Canvas implements Runnable {
 	}
 
 	private void setPanel() {
+
 		label = new JLabel("Gravity");
 		label.setBounds((PW / 2) - 50, 0, 100, 25);
+
 		btns = new JButton[2];
 		btns[0] = new JButton("Add");
 		btns[0].setBounds(25, 120, 100, 25);
@@ -48,7 +50,7 @@ public class Window extends Canvas implements Runnable {
 		btns[1].setBounds(125, 120, 100, 25);
 
 		slider = new JSlider[2];
-		slider[0] = new JSlider(0, 10);
+		slider[0] = new JSlider(0, 100);
 		slider[0].setBounds(20, 30, PW - 50, 20);
 		slider[1] = new JSlider(5, 50);
 		slider[1].setBounds(20, 80, PW - 50, 20);
@@ -57,8 +59,18 @@ public class Window extends Canvas implements Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.add(new Ball(0, 0, slider[0].getValue()));
-				System.out.println(slider[0].getValue());
+				handler.add(
+						new Ball(20 + (int) (Math.random() * (W - PW - 100)), 70, (double) slider[0].getValue() / 10));
+
+			}
+		});
+
+		btns[1].addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handler.clear();
+
 			}
 		});
 
