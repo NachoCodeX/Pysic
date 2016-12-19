@@ -22,6 +22,7 @@ public class Handler {
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).update();
 		}
+
 	}
 
 	public void add(Ball ball) {

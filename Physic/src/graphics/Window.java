@@ -3,6 +3,7 @@ package graphics;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
@@ -23,10 +24,11 @@ public class Window extends Canvas implements Runnable {
 	private JPanel panel;
 	private JSlider[] slider;
 	private JButton[] btns;
-	private JLabel label;
+	private JLabel[] label;
 	private Thread thread;
 	private volatile boolean isRun;
 	private Handler handler;
+	public static Rectangle floor;
 
 	public Window() {
 		handler = new Handler();
@@ -38,9 +40,13 @@ public class Window extends Canvas implements Runnable {
 	}
 
 	private void setPanel() {
+		floor = new Rectangle(0, 565, (W - PW), 5);
 
-		label = new JLabel("Gravity");
-		label.setBounds((PW / 2) - 50, 0, 100, 25);
+		label = new JLabel[2];
+		label[0] = new JLabel("Gravity");
+		label[0].setBounds((PW / 2) - 50, 0, 100, 25);
+		label[1] = new JLabel("Size");
+		label[1].setBounds((PW / 2) - 50, 0, 100, 125);
 
 		btns = new JButton[2];
 		btns[0] = new JButton("Add");
@@ -50,17 +56,17 @@ public class Window extends Canvas implements Runnable {
 		btns[1].setBounds(125, 120, 100, 25);
 
 		slider = new JSlider[2];
-		slider[0] = new JSlider(0, 100);
+		slider[0] = new JSlider(-100, 100);
 		slider[0].setBounds(20, 30, PW - 50, 20);
-		slider[1] = new JSlider(5, 50);
+		slider[1] = new JSlider(10, 50);
 		slider[1].setBounds(20, 80, PW - 50, 20);
 
 		btns[0].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				handler.add(
-						new Ball(20 + (int) (Math.random() * (W - PW - 100)), 70, (double) slider[0].getValue() / 10));
+				handler.add(new Ball(20 + (int) (Math.random() * (W - PW - 100)), 70,
+						(double) slider[0].getValue() / 10, slider[1].getValue()));
 
 			}
 		});
@@ -77,11 +83,11 @@ public class Window extends Canvas implements Runnable {
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBounds((W - PW), 0, PW, H);
-		panel.add(slider[0]);
-		panel.add(slider[1]);
-		panel.add(label);
-		panel.add(btns[0]);
-		panel.add(btns[1]);
+		for (int i = 0; i < btns.length; i++) {
+			panel.add(btns[i]);
+			panel.add(label[i]);
+			panel.add(slider[i]);
+		}
 	}
 
 	private void createJFrame() {
@@ -111,7 +117,8 @@ public class Window extends Canvas implements Runnable {
 
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, W, H);
-
+		g.setColor(Color.GRAY);
+		g.fillRect(0, 565, (W - PW), 5);
 		handler.render(g);
 		g.dispose();
 		bs.show();

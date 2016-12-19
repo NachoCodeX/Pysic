@@ -2,6 +2,7 @@ package graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Ball {
 
@@ -13,23 +14,27 @@ public class Ball {
 		this.y = (int) args[1];
 		this.gravity = args[2];
 		this.dy = this.dx = 0;
-		this.radius = 40;
-		this.dt = Math.sqrt(2 * Window.H / Math.abs(gravity)) / 100;
+		this.radius = (int) args[3];
+		this.dt = (Math.sqrt(2 * Window.H / Math.abs(gravity)) / 100) + 0.1;
 		this.energyloss = 0.65;
-		System.out.println(dt);
+		// System.out.println(dt);
 	}
 
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
 		g.fillOval(this.x, this.y, radius, radius);
+		g.setColor(Color.GREEN);
+		g.drawRect(x, y, radius, radius);
 	}
 
 	public void update() {
 
-		if (y > Window.H - radius - (radius / 2)) {
-			y = Window.H - radius - (radius / 2);
+		if (getRect().intersects(Window.floor)) {
+			y = 510;
+			// System.out.println(y);
 			dy *= energyloss;
 			dy = -dy;
+
 		} else {
 			// Velocity Formula
 			dy += gravity * dt;
@@ -37,6 +42,10 @@ public class Ball {
 			y += dy * dt + (gravity * Math.pow(dt, 2) / 2);
 
 		}
+	}
+
+	public Rectangle getRect() {
+		return new Rectangle(this.x, this.y, this.radius, this.radius);
 	}
 
 }
