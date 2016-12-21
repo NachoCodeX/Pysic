@@ -30,7 +30,7 @@ public class Ball {
 	public void update() {
 
 		if (getRect().intersects(Window.floor)) {
-			y = 510;
+			y = Window.floor.y - radius;
 			// System.out.println(y);
 			dy *= energyloss;
 			dy = -dy;
