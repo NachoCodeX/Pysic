@@ -18,17 +18,18 @@ public class Ball {
 		this.dt = (Math.sqrt(2 * Window.H / Math.abs(gravity)) / 100) + 0.1;
 		this.energyloss = 0.65;
 		// System.out.println(dt);
+
 	}
 
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
 		g.fillOval(this.x, this.y, radius, radius);
 		g.setColor(Color.GREEN);
-		g.drawRect(x, y, radius, radius);
+		g.drawRect(x + ((radius * 5) / 50), y + ((radius * 4) / 50), radius - ((radius * 10) / 50),
+				radius - ((radius * 10) / 50));
 	}
 
 	public void update() {
-
 		if (getRect().intersects(Window.floor)) {
 			y = Window.floor.y - radius;
 			// System.out.println(y);

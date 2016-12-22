@@ -23,6 +23,20 @@ public class Handler {
 			balls.get(i).update();
 		}
 
+		collision();
+
+	}
+
+	public void collision() {
+		for (int i = 0; i < balls.size(); i++) {
+			Ball temp1 = balls.get(i);
+			for (int j = 0; j < balls.size(); j++) {
+				Ball temp2 = balls.get(j);
+				if (temp1.getRect().intersects(temp2.getRect()) && i != j) {
+					System.out.println(":>");
+				}
+			}
+		}
 	}
 
 	public void add(Ball ball) {
