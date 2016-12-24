@@ -33,7 +33,12 @@ public class Handler {
 			for (int j = 0; j < balls.size(); j++) {
 				Ball temp2 = balls.get(j);
 				if (temp1.getRect().intersects(temp2.getRect()) && i != j) {
-					System.out.println(":>");
+					temp2.push();
+					temp1.setEnergyLoss(Math.random() * (1));
+				}
+
+				if (temp1.getRect().x == temp2.getRect().x && temp1.getRect().y == temp2.getRect().y && i != j) {
+
 				}
 			}
 		}

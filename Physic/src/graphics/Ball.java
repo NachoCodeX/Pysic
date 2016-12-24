@@ -43,10 +43,30 @@ public class Ball {
 			y += dy * dt + (gravity * Math.pow(dt, 2) / 2);
 
 		}
+
+		if (x >= Window.W - Window.PW - radius) {
+			x = Window.W - Window.PW - radius;
+			dx = -dx;
+		} else if (x <= 0) {
+			dx *= -1;
+
+		}
+
+		x += dx;
+
 	}
 
 	public Rectangle getRect() {
 		return new Rectangle(this.x, this.y, this.radius, this.radius);
 	}
 
+	public void push() {
+		dx = -5 + (Math.random() * (10 + 5));
+
+		// System.out.println(dx);
+	}
+
+	public void setEnergyLoss(double energyloss) {
+		this.energyloss = energyloss;
+	}
 }
